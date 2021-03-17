@@ -27,7 +27,7 @@ class FirstRoute extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          child: Text('Open route'),
+          child: Text('Go to next page'),
           onPressed: () {
             // Navigate to second route when tapped.
             Navigator.push(
@@ -54,7 +54,7 @@ class SecondRoute extends StatelessWidget {
             // Navigate back to first route when tapped.
             Navigator.pop(context);
           },
-          child: Text('Go back!'),
+          child: Text('Go to first page'),
         ),
       ),
     );
