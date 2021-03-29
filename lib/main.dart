@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,38 +21,51 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// TODO: When you press the button, change the background color of the app
 class BodyWidget extends StatelessWidget {
-
   //String fruit = 'Apples';
-  final fruitNotfier = ValueNotifier<String>('apples');
-
+  final colorNotfier = ValueNotifier<Color>(Colors.purple.shade700);
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        //color: Colors.yellow,
-        child: Column(
-          children: [
-            SizedBox(height: 100),
-            ValueListenableBuilder<String>(
-              valueListenable: fruitNotfier,
-              builder: (context, value, child) {
-                return Text(value);
-              },
-            ),
+    return ValueListenableBuilder<Color>(
+      valueListenable: colorNotfier,
+      builder: (context, color, child) {
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: color,
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(height: 100),
+                Text('Hello'),
+                SizedBox(height: 100),
+                ElevatedButton(
+                  onPressed: () {
+                    print('I was clicked.');
+                    final randomNumber = Random().nextInt(7);
+                    final myNewColor = colorList[randomNumber];
 
-            SizedBox(height: 100),
-            ElevatedButton(
-              onPressed: () {
-                print('I was clicked.');
-
-                fruitNotfier.value = 'Bananas';
-              },
-              child: Text('Click me'),
+                    colorNotfier.value = myNewColor;
+                  },
+                  child: Text('Click me'),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
+
+
+final colorList = <Color>[
+  Colors.purple,
+  Colors.white,
+  Colors.orange,
+  Colors.blue,
+  Colors.red,
+  Colors.pink,
+  Colors.lightGreenAccent,
+];
