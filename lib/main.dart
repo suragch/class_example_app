@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'counter_screen.dart';
 
-import 'service_locator.dart';
 
 void main() {
-  setupServiceLocator();
   runApp(MyApp());
 }
 
@@ -16,7 +13,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CounterScreen(),
+      home: Scaffold(
+        body: Container(),
+      ),
     );
   }
 }
