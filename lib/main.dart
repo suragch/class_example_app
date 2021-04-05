@@ -42,8 +42,10 @@ class _BodyWidgetState extends State<BodyWidget> {
     myFontSize = prefs.getDouble('UserFontSize') ?? 20.0;
   }
 
-  Future<void> _saveFontSize(double fontSize) async {
-    myFontSize = fontSize;
+  void _saveFontSize(double fontSize) async {
+    setState(() {
+      myFontSize = fontSize;
+    });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setDouble('UserFontSize', fontSize);
   }
@@ -60,26 +62,19 @@ class _BodyWidgetState extends State<BodyWidget> {
           children: [
             ElevatedButton(
               onPressed: () {
-                setState(() async {
-
-                  _saveFontSize(10.0);
-                });
+                _saveFontSize(10.0);
               },
               child: Text('Small'),
             ),
             ElevatedButton(
               onPressed: () {
-                setState(() async {
-                  _saveFontSize(20.0);
-                });
+                _saveFontSize(20.0);
               },
               child: Text('Medium'),
             ),
             ElevatedButton(
               onPressed: () {
-                setState(() async {
-                  _saveFontSize(50.0);
-                });
+                _saveFontSize(50.0);
               },
               child: Text('Large'),
             ),
