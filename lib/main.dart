@@ -54,10 +54,3 @@ class BodyWidget extends StatelessWidget {
     );
   }
 }
-=======
-        body: Container(),
-      ),
-    );
-  }
-}
->>>>>>> aedd8d4f231357e299201b72fe7fa56de35a80ba
