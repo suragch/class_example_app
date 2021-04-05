@@ -36,7 +36,7 @@ class BodyWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            ElevatedButton(
+            TextButton(
               onPressed: () {},
               child: Text('Small'),
             ),
