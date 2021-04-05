@@ -1,24 +1,22 @@
-
-
 import 'package:flutter/material.dart';
+import 'counter_screen.dart';
 
-import 'home_page/home_page.dart';
+import 'service_locator.dart';
 
 void main() {
+  setupServiceLocator();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: BodyWidget(),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: CounterScreen(),
     );
   }
 }
