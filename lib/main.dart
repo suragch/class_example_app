@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+import 'database_helper.dart';
+
+void main() {
+
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -31,7 +37,9 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                print('Insert');
+              },
               child: Text('insert'),
             ),
             SizedBox(height: 10),
