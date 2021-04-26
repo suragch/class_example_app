@@ -1,86 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'SQFlite Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: BodyWidget(),
-      ),
-    );
-  }
-}
-
-class BodyWidget extends StatefulWidget {
-  const BodyWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  _BodyWidgetState createState() => _BodyWidgetState();
-}
-
-class _BodyWidgetState extends State<BodyWidget> {
-  var myFontSize = 20.0;
-  @override
-  void initState() {
-    _getFontSize();
-    super.initState();
-  }
-
-  Future<void> _getFontSize() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    myFontSize = prefs.getDouble('UserFontSize') ?? 20.0;
-  }
-
-  void _saveFontSize(double fontSize) async {
-    setState(() {
-      myFontSize = fontSize;
-    });
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setDouble('UserFontSize', fontSize);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "My wonderful app.",
-          style: TextStyle(fontSize: myFontSize),
-        ),
-        Row(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                _saveFontSize(10.0);
-              },
-              child: Text('Small'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _saveFontSize(20.0);
-              },
-              child: Text('Medium'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _saveFontSize(50.0);
-              },
-              child: Text('Large'),
-            ),
-          ],
-        )
-      ],
+      home: Container(),
     );
   }
 }
