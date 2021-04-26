@@ -10,7 +10,48 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Container(),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Database'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('insert'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('query'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('update'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('delete'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
