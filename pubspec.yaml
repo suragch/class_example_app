@@ -1,6 +1,5 @@
-name: layout
-description: >
-  Sample app from "Building Layouts", https://flutter.io/docs/development/ui/layout.
+name: class_example_app
+description: Class example app
 version: 1.0.0
 
 environment:
@@ -9,7 +8,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sqflite: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
@@ -17,5 +15,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - images/lake.jpg

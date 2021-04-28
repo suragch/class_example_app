@@ -1,65 +1,66 @@
 import 'package:flutter/material.dart';
 
-import 'database_helper.dart';
-
-void main() {
-
-
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SQFlite Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({
-    Key key,
-  }) : super(key: key);
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Database'),
-      ),
+      appBar: AppBar(title: Text('HTTP requests')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             ElevatedButton(
-              onPressed: () {
-                print('Insert');
-              },
-              child: Text('insert'),
+              child: Text(
+                'GET',
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: _makeGetRequest,
             ),
-            SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {},
-              child: Text('query'),
+              child: Text(
+                'POST',
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: _makePostRequest,
             ),
-            SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {},
-              child: Text('update'),
+              child: Text(
+                'PUT',
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: _makePutRequest,
             ),
-            SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {},
-              child: Text('delete'),
+              child: Text(
+                'DELETE',
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: _makeDeleteRequest,
             ),
           ],
         ),
       ),
     );
   }
+
+  // Button onPressed methods
+
+  void _makeGetRequest() async {}
+
+  void _makePostRequest() async {}
+
+  void _makePutRequest() async {}
+
+  void _makeDeleteRequest() async {}
 }
