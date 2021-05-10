@@ -1,26 +1,26 @@
-
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: AuthenticationWrapper());
+    return MaterialApp(home: HomePage());
   }
 }
 
-class AuthenticationWrapper extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('hello')),
+      body: Center(
+        child: Text(
+          'ᠰᠠᠶᠢᠨ ᠪᠠᠶᠢᠨ᠎ᠠ ᠤᠤ',
+          style: TextStyle(fontFamily: 'MongolianScript', fontSize: 30),
+        ),
+      ),
     );
   }
 }

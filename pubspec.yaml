@@ -17,3 +17,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: MongolianScript
+      fonts:
+        - asset: assets/fonts/MongolianScript.ttf
