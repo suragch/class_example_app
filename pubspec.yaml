@@ -8,7 +8,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mongol: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -18,7 +17,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  fonts:
-    - family: MongolianScript
-      fonts:
-        - asset: assets/fonts/MongolianScript.ttf
