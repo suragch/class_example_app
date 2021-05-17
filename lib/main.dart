@@ -15,17 +15,18 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
-      body: Center(
-        child: Container(
-          height: 300,
-          width: 200,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: MongolText(
-              'ᠰᠠᠶᠢᠨ ᠪᠠᠶᠢᠨ᠎ᠠ ᠤᠤ ᠨᠠᠷᠢᠯᠢᠭ ᠬᠢᠴᠡᠲᠡᠢ ᠲᠠᠪᠤᠨ ᠵᠦᠢᠯ ᠦᠨ ᠲᠢᠭ᠄ ᠴᠠᠭᠠᠨ᠂ ᠤᠷᠭ᠎ᠠ᠂ ᠪᠢᠴᠢᠮᠡᠯ᠂ ᠤᠷᠭ᠎ᠠ ︵ᠮᠣᠰᠺᠸᠠ︶᠂ ᠤᠷᠭ᠎ᠠ ᠨᠠᠷᠢᠨ ᠨᠠᠷᠢᠯᠢᠭ ᠬᠢᠴᠡᠲᠡᠢ ᠲᠠᠪᠤᠨ ᠵᠦᠢᠯ ᠦᠨ ᠲᠢᠭ᠄ ᠴᠠᠭᠠᠨ᠂ ᠤᠷᠭ᠎ᠠ᠂ ᠪᠢᠴᠢᠮᠡᠯ᠂ ᠤᠷᠭ᠎ᠠ ︵ᠮᠣᠰᠺᠸᠠ︶᠂ ᠤᠷᠭ᠎ᠠ ᠨᠠᠷᠢᠨ ᠨᠠᠷᠢᠯᠢᠭ ᠬᠢᠴᠡᠲᠡᠢ ᠲᠠᠪᠤᠨ ᠵᠦᠢᠯ ᠦᠨ ᠲᠢᠭ᠄ ᠴᠠᠭᠠᠨ᠂ ᠤᠷᠭ᠎ᠠ᠂ ᠪᠢᠴᠢᠮᠡᠯ᠂ ᠤᠷᠭ᠎ᠠ ︵ᠮᠣᠰᠺᠸᠠ︶᠂ ᠤᠷᠭ᠎ᠠ ᠨᠠᠷᠢᠨ ᠨᠠᠷᠢᠯᠢᠭ ᠬᠢᠴᠡᠲᠡᠢ ᠲᠠᠪᠤᠨ ᠵᠦᠢᠯ ᠦᠨ ᠲᠢᠭ᠄ ᠴᠠᠭᠠᠨ᠂ ᠤᠷᠭ᠎ᠠ᠂ ᠪᠢᠴᠢᠮᠡᠯ᠂ ᠤᠷᠭ᠎ᠠ ︵ᠮᠣᠰᠺᠸᠠ︶᠂ ᠤᠷᠭ᠎ᠠ ᠨᠠᠷᠢᠨ',
-              style: TextStyle(fontFamily: 'MongolianScript', fontSize: 30),
-            ),
+      body: Container(
+        color: Colors.blue.shade800,
+        child: Center(
+          child: Text(
+            'View\n\n' +
+                '[MediaQuery width]: ${screenSize.width.toStringAsFixed(2)}\n\n' +
+                '[MediaQuery orientation]: $orientation',
+            style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
       ),
