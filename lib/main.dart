@@ -1,137 +1,147 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:camera/camera.dart';
+import 'package:http/http.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 Future<void> main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-
   runApp(
     MaterialApp(
       theme: ThemeData.dark(),
-      home: TakePictureScreen(
-        // Pass the appropriate camera to the TakePictureScreen widget.
-        camera: firstCamera,
+      home: Scaffold(
+        body: HomePage(),
       ),
     ),
   );
 }
 
-// A screen that allows users to take a picture using a given camera.
-class TakePictureScreen extends StatefulWidget {
-  final CameraDescription camera;
-
-  const TakePictureScreen({
-    Key? key,
-    required this.camera,
-  }) : super(key: key);
-
+class HomePage extends StatefulWidget {
   @override
-  TakePictureScreenState createState() => TakePictureScreenState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class TakePictureScreenState extends State<TakePictureScreen> {
-  late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
+class _HomePageState extends State<HomePage> {
+  List<Animal> birds = [];
+  List<Animal> dogs = [];
+  late Animal animal;
 
   @override
   void initState() {
     super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
-    _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
-      widget.camera,
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
-
-    // Next, initialize the controller. This returns a Future.
-    _initializeControllerFuture = _controller.initialize();
+    _getJsonFromOnline();
   }
 
-  @override
-  void dispose() {
-    // Dispose of the controller when the widget is disposed.
-    _controller.dispose();
-    super.dispose();
+  void _getJsonFromOnline() async {
+    final response = await get(Uri.parse(
+        'https://raw.githubusercontent.com/suragch/furry_box_data/main/furry_data.json'));
+    print(response.body);
+    final jsonString = response.body;
+    final jsonMap = jsonDecode(jsonString);
+    birds = getAnimals('birds', jsonMap);
+    dogs = getAnimals('dogs', jsonMap);
+
+    final canary = birds.firstWhere((bird) => bird.name == 'canaries');
+    animal = canary;
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Take a picture')),
-      // You must wait until the controller is initialized before displaying the
-      // camera preview. Use a FutureBuilder to display a loading spinner until the
-      // controller has finished initializing.
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return CameraPreview(_controller);
-          } else {
-            // Otherwise, display a loading indicator.
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+    return Center(
+      child: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Birds(birdList: birds)));
+            },
+            child: Text('Show canary info'),
+          ),
+          if (birds.isNotEmpty) Text(birds.first.name), // or GridView
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        // Provide an onPressed callback.
-        onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
-          try {
-            // Ensure that the camera is initialized.
-            await _initializeControllerFuture;
+    );
+  }
 
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
-            final image = await _controller.takePicture();
+  List<Animal> getAnimals(String category, Map<String, dynamic> jsonMap) {
+    final rawAnimalList = jsonMap[category] as List;
+    final animals = <Animal>[];
+    for (final item in rawAnimalList) {
+      final animal = Animal(
+        category,
+        item['name'],
+        item['description'],
+        item['url'],
+      );
+      animals.add(animal);
+    }
+    return animals;
+  }
+}
 
-            // If the picture was taken, display it on a new screen.
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  imagePath: image.path,
+class Animal {
+  Animal(this.category, this.name, this.description, this.imageUrl);
+  final String category;
+  final String name;
+  final String description;
+  final String imageUrl;
+}
+
+class Birds extends StatefulWidget {
+  Birds({Key? key, required this.birdList}) : super(key: key);
+  final List<Animal> birdList;
+  @override
+  _BirdsState createState() => _BirdsState();
+}
+
+class _BirdsState extends State<Birds> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        child: GridView.builder(
+          itemCount: widget.birdList.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            final bird = widget.birdList[index];
+            return Column(
+              children: [
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Image.network(bird.imageUrl),
                 ),
-              ),
+                Text(bird.name),
+                ElevatedButton(onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AnimalDetails(animal: bird)));
+                }, child: Text('details')),
+
+              ],
             );
-          } catch (e) {
-            // If an error occurs, log the error to the console.
-            print(e);
-          }
-        },
-        child: const Icon(Icons.camera_alt),
+          },
+        ),
       ),
     );
   }
 }
 
-// A widget that displays the picture taken by the user.
-class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
-
-  const DisplayPictureScreen({Key? key, required this.imagePath}) : super(key: key);
+class AnimalDetails extends StatelessWidget {
+  const AnimalDetails({Key? key, required this.animal}) : super(key: key);
+  final Animal animal;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      body: Column(
+        children: [
+          Image.network(animal.imageUrl),
+          Text(animal.name),
+          Text(animal.description),
+        ],
+      ),
     );
   }
 }
